@@ -10,7 +10,7 @@ import (
 	"filippo.io/age"
 )
 
-func secretsDir() string {
+func SecretsDir() string {
 	dir := filepath.Join(os.Getenv("Home"), ".secrert")
 	os.MkdirAll(dir, 0700)
 	return dir
@@ -36,12 +36,12 @@ func StoreSecret(name, plaintext, passphrase string) error {
 
 	w.Close()
 
-	path := filepath.Join(secretsDir(), name+".secret")
+	path := filepath.Join(SecretsDir(), name+".secret")
 	return os.WriteFile(path, out.Bytes(), 0600)
 }
 
 func RetrieveSecret(name, passphrase string) (string, error) {
-	path := filepath.Join(secretsDir(), name+".secret")
+	path := filepath.Join(SecretsDir(), name+".secret")
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
