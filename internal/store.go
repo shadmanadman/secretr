@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"filippo.io/age"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func SecretsDir() string {
