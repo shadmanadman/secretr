@@ -122,3 +122,28 @@ func DeleteSecret(name string) error {
 
 	return nil
 }
+
+func ListSecrets() ([]string, error) {
+	db, err := getDB()
+	if err != nil {
+		return nil, err
+	}
+
+	defer db.Close()
+
+	rows, err := db.Query(`SELECT name FROM secrets ORDER BY name`)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var results []string
+	for rows.Next() {
+		var name string
+		rows.Scan(&name)
+		results = append(results, name)
+	}
+
+	return results, nil
+}
